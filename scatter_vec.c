@@ -32,6 +32,7 @@ int main(int argc, char *argv[])
     double *recv_cols = malloc(sizeof(*recv_cols) * count);
     if (rank == 0) {
 	matrix = malloc(sizeof(*matrix) * count);
+	/*
 	for (int i = 0; i < m; i++) {
 	    for (int j = 0; j < n; j++) {
 		matrix[i * n + j] = i * n + j;
@@ -39,10 +40,15 @@ int main(int argc, char *argv[])
 	    }
 	    printf("\n");
 	}
+	*/
+	for (int i = 0; i < count; i++)
+	    matrix[i] = i;
+	/*
 	if (matrix == NULL) {
 	    fprintf(stderr, "Error: malloc failed\n");
 	    MPI_Abort(MCW, 1);
 	}
+	*/
     }
 
     /*
@@ -121,7 +127,7 @@ int main(int argc, char *argv[])
 		}
 		printf("\n");
 	    }
-	    //MPI_Barrier(MCW);
+
 	}
 /*
     printf("%d %f\n", rank, t);
@@ -131,9 +137,10 @@ int main(int argc, char *argv[])
 	fprintf(f, "%f\n", t_g);
     }
 */
-    //MPI_Barrier(MCW);
+
     free(matrix);
     free(recv_cols);
+
     MPI_Type_free(&vector);
     MPI_Type_free(&vector_resized);
     //MPI_Type_free(&vector_resized1);
